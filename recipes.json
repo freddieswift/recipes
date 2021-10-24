@@ -1,0 +1,1 @@
+{"id":1,"name":"fajitas","ingredients":[{"name":"chicken","quantity":"500g"},{"name":"onions","quantity":"one small"}],"steps":[{"number":1,"step":"fry chicken"},{"number":2,"step":"fry onions"}],"serves":4,"time":"1 Hour"}
