@@ -20,20 +20,26 @@ hbs.registerPartials(partialsPath)
 //set up static directory to server
 app.use(express.static(publicDirPath))
 
+//home page
 app.get('', (req, res) => {
     res.render('index')
 })
 
+//BBCweb scraping end point
+//takes in a bbc good food url as a query parameter
 app.get('/bbc', (req, res) => {
+    //throw error if no url provided
     if(!req.query.url){
         return res.send({
             error: 'You must enter a URL'
         })
     }
     recipe.getBBCRecipe(req.query.url)
+        //if promise if resloved, return recipe (ingredients and steps fetched from html of page)
         .then((recipe) => {
             res.send(recipe)
         })
+        //if promise if rejected, return error
         .catch((e) => {
             res.send({error: 'Error: You may not be connect to the internet or you may have entered the URL incorrectly...'})
         })

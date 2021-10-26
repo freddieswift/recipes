@@ -1,23 +1,21 @@
-//const BBCForm = document.querySelector('bbc-form')
 const searchField = document.querySelector('#bbc-search-field')
 const searchButton = document.querySelector('button')
-const ingredients = document.querySelector('#ingredients')
-const steps = document.querySelector('#steps')
 
-
+//make call to bbc webscaping endpoint when user clicks search
+//and populate the page with ingredients and steps from the page specified in the search box
 searchButton.addEventListener('click', (e) => {
     e.preventDefault()
-
+    //url query param = value in search field
     const url = '/bbc?url=' + searchField.value
     fetch(url).then((response) => {
+        //get response data
         response.json().then((data) => {
+            //show error to user
             if(data.error){
-                ingredients.textContent = data.error
+                $('<div class="error" />').text(data.error).appendTo('body')
             }
+            //show ingredients and steps to user
             else{
-                // let ingredientsTitle = document.createElement('p')
-                // ingredientsTitle.innerText = "Ingredients"
-                // document.body.appendChild(ingredientsTitle)
                 addDivs('ingredient', data.ingredients)
                 addDivs('step', data.steps)
             }
@@ -25,11 +23,12 @@ searchButton.addEventListener('click', (e) => {
     })
 })
 
+//populate page with contents of array
 const addDivs = (className, array) => {
+    //add title to page i.e. Ingredients/Steps
     $('<div class="title" />').text(className + 's').appendTo('body')
+    //popluate page with contents of array
     for (let i = 0; i < array.length; i++){
         $('<div class="' + className + '" />').text(array[i]).appendTo('body')
     }
-
-
 }
